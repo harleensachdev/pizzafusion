@@ -3,44 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pizza Fusion</title>
+    <title>Pizza 2048 Game</title>
     <link rel="stylesheet" href="styles.css">
+    <script defer src="scripts.js"></script>
 </head>
 <body>
-    <div id="game-container">
-        <div id="game-header">
-            <h1>Pizza Fusion</h1>
-            <div id="score-container">
-                Score: <span id="score">0</span>
+    <div class="container">
+        <div class="header">
+            <h1>Pizza Fuse</h1>
+            <div class="scores">
+                <div>Score: <span id="score">0</span></div>
+                <div>High Score: <span id="high-score">0</span></div>
             </div>
-            <button id="reset-button">Reset Game</button>
         </div>
-        <div id="game-board"></div>
-        <div id="pizzas-list">
-            <h2>Pizzas and Points</h2>
+        <div id="game-board" class="game-board"></div>
+        <button id="reset-button" class="reset-button">Reset Game</button>
+        <button id="reset-high-score-button" class="reset-button">Reset High Score</button>
+        <div class="pizza-levels" id="pizza-levels">
+            <h2>Guide</h2>
             <ul>
-                <li>Dough: 10 points</li>
-                <li>Sauce: 10 points</li>
-                <li>Base: 20 points</li>
-                <li>Pizza: 50 points</li>
-                <li>Pepperoni Pizza: 150 points</li>
-                <li>Mushroom Pizza: 150 points</li>
-                <li>Olive Pizza: 150 points</li>
-                <li>Pineapple Pizza: 150 points</li>
-                <li>Pepperoni Olive Pizza: 300 points</li>
-                <li>Mushroom Pepperoni Pizza: 300 points</li>
-                <li>Olive Pineapple Pizza: 300 points</li>
-                <li>Mushroom Olive Pizza: 300 points</li>
-                <li>Pepperoni Pineapple Pizza: 300 points</li>
-                <li>Mushroom Pineapple Pizza: 300 points</li>
-                <li>Pepperoni Olive Mushroom Pizza: 500 points</li>
-                <li>Pepperoni Olive Pineapple Pizza: 500 points</li>
-                <li>Pepperoni Mushroom Pineapple Pizza: 500 points</li>
-                <li>Olive Mushroom Pineapple Pizza: 500 points</li>
-                <li>Ultimate Pizza: 1000 points</li>
+                <li>HOW TO PLAY: Use your arrow keys or swipe in the direction you want to move (tablet/phone) to move the tiles.</li>
+                <li>When water and flour touch, they get promoted to dough</li>
+                <li>When water and tomato touch, they get promoted to sauce</li>
+                <li>When dough and sauce touch, they get promoted to pizza</li>
+                <li>When pizza and toppings (cheese, pepperoni, ham, pineapple, mushrooms) touch, they get promoted </li>
+                <li>When Pizza cheese and pepperoni and others touch, they get promoted to Pizza cheese pepperoni</li>
+                <li>Whats the most loaded pizza you can get to? Whats the highest score you can get to?</li>
+                <li>Tip: Make dough first (water + flour)</li>
             </ul>
         </div>
     </div>
-    <script src="scripts.js"></script>
 </body>
 </html>
+
+

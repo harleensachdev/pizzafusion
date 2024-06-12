@@ -2,96 +2,67 @@ document.addEventListener('DOMContentLoaded', function () {
     const boardSize = 4;
     const gameBoard = document.getElementById('game-board');
     const scoreDisplay = document.getElementById('score');
+    const highScoreDisplay = document.getElementById('high-score');
     const resetButton = document.getElementById('reset-button');
+    const resetHighScoreButton = document.getElementById('reset-high-score-button');
     const initialTiles = ['flour', 'water', 'tomato'];
-    const toppingTiles = ['pepperoni', 'mushroom', 'olive', 'pineapple', , 'flour', 'water', 'tomato'];
+    const toppingTiles = ['pepperoni', 'mushroom', 'pineapple', 'cheese', 'ham'];
     let tiles = Array(boardSize * boardSize).fill(null);
     let score = 0;
+    let highScore = 0;
     let pizzaCreated = false;
-    let baseCreated = false;
     let lastThreeTiles = [];
-
-
-    const combinations = {
-        'flour-water': 'dough',
-        'water-flour': 'dough',
-        'tomato-water': 'sauce',
-        'water-tomato': 'sauce',
-        'dough-sauce': 'base',
-        'sauce-dough': 'base',
-        'base-cheese': 'pizza',
-        'cheese-base': 'pizza',
-        'pizza-pepperoni': 'pepperoni pizza',
-        'pepperoni-pizza': 'pepperoni pizza',
-        'pizza-mushroom': 'mushroom pizza',
-        'mushroom-pizza': 'mushroom pizza',
-        'pizza-olive': 'olive pizza',
-        'olive-pizza': 'olive pizza',
-        'pizza-pineapple': 'pineapple pizza',
-        'pineapple-pizza': 'pineapple pizza',
-        'pepperoni pizza-olive': 'pepperoni olive pizza',
-        'olive-pepperoni pizza': 'pepperoni olive pizza',
-        'pepperoni pizza-mushroom': 'mushroom pepperoni pizza',
-        'mushroom-pepperoni pizza': 'mushroom pepperoni pizza',
-        'pepperoni pizza-pineapple': 'pepperoni pineapple pizza',
-        'pineapple-pepperoni pizza': 'pepperoni pineapple pizza',
-        'mushroom pizza-olive': 'mushroom olive pizza',
-        'olive-mushroom pizza': 'mushroom olive pizza',
-        'mushroom pizza-pineapple': 'mushroom pineapple pizza',
-        'pineapple-mushroom pizza': 'mushroom pineapple pizza',
-        'olive pizza-pineapple': 'olive pineapple pizza',
-        'pineapple-olive pizza': 'olive pineapple pizza',
-        'pepperoni olive pizza-mushroom': 'pepperoni olive mushroom pizza',
-        'pepperoni mushroom pizza-olive': 'pepperoni olive mushroom pizza',
-        'mushroom olive pizza-pepperoni': 'pepperoni olive mushroom pizza',
-        'pepperoni pizza-mushroom olive': 'pepperoni olive mushroom pizza',
-        'mushroom pizza-pepperoni olive': 'pepperoni olive mushroom pizza',
-        'olive pizza-pepperoni mushroom': 'pepperoni olive mushroom pizza',
-        'pepperoni olive mushroom pizza-pineapple': 'ultimate pizza',
-        'pepperoni mushroom pizza-olive pineapple': 'ultimate pizza',
-        'mushroom olive pizza-pepperoni pineapple': 'ultimate pizza',
-        'pizza-pepperoni olive mushroom pineapple': 'ultimate pizza',
-        'pepperoni olive pizza-pineapple': 'pepperoni olive pineapple pizza',
-        'pepperoni mushroom pizza-pineapple': 'pepperoni mushroom pineapple pizza',
-        'mushroom olive pizza-pineapple': 'olive mushroom pineapple pizza',
-        'pepperoni mushroom pineapple pizza-olive': 'pepperoni mushroom pineapple pizza',
-        'pepperoni olive pineapple pizza-mushroom': 'pepperoni olive pineapple pizza',
-        'mushroom olive pineapple pizza-pepperoni': 'olive mushroom pineapple pizza',
-        'pepperoni pizza-mushroom olive pineapple': 'ultimate pizza',
-        'mushroom pizza-pepperoni olive pineapple': 'ultimate pizza',
-        'olive pizza-pepperoni mushroom pineapple': 'ultimate pizza'
-    };
 
     const points = {
         'dough': 10,
         'sauce': 10,
-        'base': 20,
         'pizza': 50,
-        'pepperoni pizza': 150,
-        'mushroom pizza': 150,
-        'olive pizza': 150,
-        'pineapple pizza': 150,
-        'pepperoni olive pizza': 300,
-        'mushroom pepperoni pizza': 300,
-        'pepperoni pineapple pizza': 300,
-        'mushroom olive pizza': 300,
-        'mushroom pineapple pizza': 300,
-        'olive pineapple pizza': 300,
-        'pepperoni olive mushroom pizza': 500,
-        'pepperoni olive pineapple pizza': 500,
-        'pepperoni mushroom pineapple pizza': 500,
-        'olive mushroom pineapple pizza': 500,
-        'ultimate pizza': 1000
+        'pizza pepperoni': 200,
+        'pizza cheese': 200,
+        'pizza mushroom': 200,
+        'pizza pineapple': 200,
+        'pizza ham': 200,
+        'pizza pepperoni cheese': 350,
+        'pizza pepperoni mushroom': 350,
+        'pizza pepperoni pineapple': 350,
+        'pizza pepperoni ham': 350,
+        'pizza cheese mushroom': 350,
+        'pizza cheese pineapple': 350,
+        'pizza cheese ham': 350,
+        'pizza mushroom pineapple': 350,
+        'pizza mushroom ham': 350,
+        'pizza pineapple ham': 350,
+        'pizza pepperoni cheese mushroom': 600,
+        'pizza pepperoni cheese pineapple': 600,
+        'pizza pepperoni cheese ham': 600,
+        'pizza pepperoni mushroom pineapple': 600,
+        'pizza pepperoni mushroom ham': 600,
+        'pizza pepperoni pineapple ham': 600,
+        'pizza cheese mushroom pineapple': 600,
+        'pizza cheese mushroom ham': 600,
+        'pizza cheese pineapple ham': 600,
+        'pizza mushroom pineapple ham': 600,
+        'pizza pepperoni cheese mushroom pineapple': 1200,
+        'pizza pepperoni cheese mushroom ham': 1200,
+        'pizza pepperoni cheese pineapple ham': 1200,
+        'pizza pepperoni mushroom pineapple ham': 1200,
+        'pizza cheese mushroom pineapple ham': 1200,
+        'pizza pepperoni cheese mushroom pineapple ham': 1500,
     };
 
-
     function initGame() {
+        loadHighScore();
         for (let i = 0; i < initialTiles.length; i++) {
             placeRandomTile(initialTiles[i]);
         }
         drawBoard();
         document.addEventListener('keydown', handleInput);
-        resetButton.addEventListener('click', resetGame);
+        resetButton.addEventListener('click', function () {
+            updateHighScore();
+            resetGame();
+        });
+        resetHighScoreButton.addEventListener('click', resetHighScore);
+        setupTouchControls();
     }
 
     function drawBoard() {
@@ -102,17 +73,24 @@ document.addEventListener('DOMContentLoaded', function () {
             if (tile) {
                 cell.classList.add(tile.replace(/ /g, '-'));
                 cell.innerText = tile;
+                if (tile.length > 10) {
+                    cell.style.fontSize = '0.8em';
+                } else if (tile.length > 6) {
+                    cell.style.fontSize = '1em';
+                } else {
+                    cell.style.fontSize = '1.5em';
+                }
             }
             gameBoard.appendChild(cell);
         });
         scoreDisplay.innerText = score;
+        highScoreDisplay.innerText = highScore;
     }
 
     function placeRandomTile(type) {
         let emptyCells = tiles.map((tile, index) => tile === null ? index : null).filter(index => index !== null);
         if (emptyCells.length === 0) return false;
 
-        // Filter positions where the tile can combine with an existing tile
         let possiblePositions = emptyCells.filter(index => {
             let adjacentIndices = getAdjacentIndices(index);
             return adjacentIndices.some(adjIndex => tiles[adjIndex] && isValidCombination(type, tiles[adjIndex]));
@@ -122,7 +100,6 @@ document.addEventListener('DOMContentLoaded', function () {
         if (possiblePositions.length > 0) {
             randomCell = possiblePositions[Math.floor(Math.random() * possiblePositions.length)];
         } else {
-            // If no such position, place it in any empty cell
             randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
         }
 
@@ -132,11 +109,32 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     function combineTiles(a, b) {
-        return combinations[`${a}-${b}`] || combinations[`${b}-${a}`] || null;
+        if ((a === 'flour' && b === 'water') || (a === 'water' && b === 'flour')) return 'dough';
+        if ((a === 'tomato' && b === 'water') || (a === 'water' && b === 'tomato')) return 'sauce';
+        if ((a === 'dough' && b === 'sauce') || (a === 'sauce' && b === 'dough')) return 'pizza';
+
+        if (a.startsWith('pizza') && toppingTiles.includes(b)) {
+            let toppings = a.split(' ').slice(1);
+            if (toppings.includes(b)) return null;
+            let newPizza = 'pizza ' + toppings.concat(b).sort().join(' ');
+            return newPizza;
+        }
+
+        if (b.startsWith('pizza') && toppingTiles.includes(a)) {
+            let toppings = b.split(' ').slice(1);
+            if (toppings.includes(a)) return null;
+            let newPizza = 'pizza ' + toppings.concat(a).sort().join(' ');
+            return newPizza;
+        }
+
+        if (a === 'pizza' && toppingTiles.includes(b)) return 'pizza ' + b;
+        if (b === 'pizza' && toppingTiles.includes(a)) return 'pizza ' + a;
+
+        return null;
     }
 
     function isValidCombination(a, b) {
-        return combinations[`${a}-${b}`] || combinations[`${b}-${a}`];
+        return combineTiles(a, b) !== null;
     }
 
     function handleInput(event) {
@@ -156,20 +154,29 @@ document.addEventListener('DOMContentLoaded', function () {
                 break;
         }
         if (moved) {
-            let newTile;
-            do {
-                if (baseCreated) {
-                    newTile = pizzaCreated ? toppingTiles[Math.floor(Math.random() * toppingTiles.length)] : (Math.random() < 0.5 ? 'cheese' : initialTiles[Math.floor(Math.random() * initialTiles.length)]);
-                } else {
+            handleTileAddition();
+        }
+    }
+
+    function handleTileAddition() {
+        let newTile;
+        do {
+            if (pizzaCreated) {
+                if (Math.random() < 0.5) {
                     newTile = initialTiles[Math.floor(Math.random() * initialTiles.length)];
+                } else {
+                    newTile = toppingTiles[Math.floor(Math.random() * toppingTiles.length)];
                 }
-            } while (isTileRepeated(newTile));
-            placeRandomTile(newTile);
-            drawBoard();
-            if (isGameOver()) {
-                alert('Game Over!');
-                resetGame();
+            } else {
+                newTile = initialTiles[Math.floor(Math.random() * initialTiles.length)];
             }
+        } while (isTileRepeated(newTile));
+        placeRandomTile(newTile);
+        drawBoard();
+        if (isGameOver()) {
+            alert('Game Over! Your score: ' + score);
+            updateHighScore();
+            resetGame();
         }
     }
 
@@ -187,11 +194,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (row[index] && combineTiles(row[index], tile)) {
                         let combinedTile = combineTiles(row[index], tile);
                         row[index] = combinedTile;
-                        score += points[combinedTile];
+                        score += points[combinedTile] || 0;
                         moved = true;
-                        if (combinedTile === 'base') {
-                            baseCreated = true;
-                        }
                         if (combinedTile.includes('pizza')) {
                             pizzaCreated = true;
                         }
@@ -225,17 +229,17 @@ document.addEventListener('DOMContentLoaded', function () {
     function isGameOver() {
         for (let i = 0; i < tiles.length; i++) {
             if (tiles[i] === null) return false;
-            if (i % boardSize < boardSize - 1 && combineTiles(tiles[i], tiles[i + 1])) return false;
-            if (i < tiles.length - boardSize && combineTiles(tiles[i], tiles[i + boardSize])) return false;
+            if (i % boardSize < boardSize - 1 && isValidCombination(tiles[i], tiles[i + 1])) return false;
+            if (i < tiles.length - boardSize && isValidCombination(tiles[i], tiles[i + boardSize])) return false;
         }
         return true;
     }
 
     function resetGame() {
+        updateHighScore();
         tiles = Array(boardSize * boardSize).fill(null);
         score = 0;
         pizzaCreated = false;
-        baseCreated = false;
         lastThreeTiles = [];
         initGame();
     }
@@ -249,6 +253,62 @@ document.addEventListener('DOMContentLoaded', function () {
 
     function isTileRepeated(tile) {
         return lastThreeTiles.filter(t => t === tile).length >= 3;
+    }
+
+    function loadHighScore() {
+        highScore = localStorage.getItem('highScore') || 0;
+        highScoreDisplay.innerText = highScore;
+    }
+
+    function updateHighScore() {
+        if (score > highScore) {
+            highScore = score;
+            localStorage.setItem('highScore', highScore);
+            highScoreDisplay.innerText = highScore;
+        }
+    }
+
+    function resetHighScore() {
+        highScore = 0;
+        localStorage.setItem('highScore', highScore);
+        highScoreDisplay.innerText = highScore;
+    }
+
+    function setupTouchControls() {
+        let touchstartX = 0;
+        let touchstartY = 0;
+        let touchendX = 0;
+        let touchendY = 0;
+
+        gameBoard.addEventListener('touchstart', function (event) {
+            touchstartX = event.changedTouches[0].screenX;
+            touchstartY = event.changedTouches[0].screenY;
+        });
+
+        gameBoard.addEventListener('touchend', function (event) {
+            touchendX = event.changedTouches[0].screenX;
+            touchendY = event.changedTouches[0].screenY;
+            handleSwipeGesture();
+        });
+
+        function handleSwipeGesture() {
+            let dx = touchendX - touchstartX;
+            let dy = touchendY - touchstartY;
+
+            if (Math.abs(dx) > Math.abs(dy)) {
+                if (dx > 0) {
+                    handleInput({ key: 'ArrowRight' });
+                } else {
+                    handleInput({ key: 'ArrowLeft' });
+                }
+            } else {
+                if (dy > 0) {
+                    handleInput({ key: 'ArrowDown' });
+                } else {
+                    handleInput({ key: 'ArrowUp' });
+                }
+            }
+        }
     }
 
     initGame();

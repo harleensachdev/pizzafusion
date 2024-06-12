@@ -1,48 +1,57 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    margin: 0;
-    padding: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
-    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    background: #f3f3f3;
+    font-family: 'Arial', sans-serif;
 }
 
-#game-container {
+.container {
     text-align: center;
 }
 
-#game-header {
+.header {
     margin-bottom: 20px;
 }
 
-#game-board {
-    width: 400px;
-    height: 400px;
-    background-color: #fff;
-    margin: 0 auto;
-    border: 1px solid #ccc;
+.header h1 {
+    font-size: 2em;
+    margin: 0;
+    color: #333;
+}
+
+.scores {
+    display: flex;
+    justify-content: space-between;
+    width: 300px;
+    margin: 10px auto;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.game-board {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-    gap: 2px;
+    grid-template-columns: repeat(4, 70px); /* Reduced tile size */
+    gap: 8px; /* Reduced gap between tiles */
+    margin: 0 auto;
+    padding: 8px; /* Reduced padding */
+    background: #bbada0;
+    border-radius: 10px;
+    width: fit-content; /* Adjust width to fit content */
 }
 
 .tile {
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center;
-    border: 1px solid grey;
-    width: 100%;
-    height: 100%;
+    width: 70px; /* Adjusted tile size */
+    height: 70px; /* Adjusted tile size */
     display: flex;
-    align-items: center;
     justify-content: center;
-    font-size: 24px;
-    color: black;
-    transition: transform 0.2s ease-in-out;
+    align-items: center;
+    background: #eee4da;
+    border-radius: 10px;
+    font-size: 1.5em;
+    color: #776e65;
 }
 
 .tile.flour { background-color: #fff5ba; }
@@ -51,39 +60,82 @@ body {
 .tile.cheese { background-color: #ffffba; }
 .tile.dough { background-color: #ffd700; }
 .tile.sauce { background-color: #ff6347; }
-.tile.base { background-color: #deb887; }
 .tile.pizza { background-color: #ff4500; }
-.tile.pepperoni-pizza { background-color: #ff6347; }
-.tile.mushroom-pizza { background-color: #d2b48c; }
-.tile.olive-pizza { background-color: #556b2f; }
-.tile.pineapple-pizza { background-color: #fff8dc; }
-.tile.pepperoni-olive-pizza { background-color: #8b0000; }
-.tile.mushroom-pepperoni-pizza { background-color: #a52a2a; }
-.tile.mushroom-olive-pizza { background-color: #8fbc8f; }
-.tile.pepperoni-pineapple-pizza { background-color: #ffd700; }
-.tile.mushroom-pineapple-pizza { background-color: #ffdead; }
-.tile.olive-pineapple-pizza { background-color: #cd853f; }
-.tile.pepperoni-olive-mushroom-pizza { background-color: #e9967a; }
-.tile.pepperoni-olive-pineapple-pizza { background-color: #e9967a; }
-.tile.pepperoni-mushroom-pineapple-pizza { background-color: #e9967a; }
-.tile.olive-mushroom-pineapple-pizza { background-color: #e9967a; }
-.tile.pepperoni-olive-mushroom-pineapple-pizza { background-color: #daa520; }
-.tile.ultimate-pizza { background-color: #daa520; }
+.tile.pepperoni { background-color: #ff6347; }
+.tile.mushroom { background-color: #d2b48c; }
+.tile.pineapple { background-color: #fff8dc; }
+.tile.ham { background-color: #ff69b4; }
+.tile.pizza-pepperoni { background-color: #8b0000; }
+.tile.pizza-mushroom { background-color: #a52a2a; }
+.tile.pizza-pineapple { background-color: #ffd700; }
+.tile.pizza-cheese { background-color: #ffd700; }
+.tile.pizza-ham { background-color: #ff69b4; }
+.tile.pizza-pepperoni-cheese { background-color: #cd853f; }
+.tile.pizza-pepperoni-mushroom { background-color: #e9967a; }
+.tile.pizza-pepperoni-pineapple { background-color: #e9967a; }
+.tile.pizza-pepperoni-ham { background-color: #e9967a; }
+.tile.pizza-cheese-mushroom { background-color: #8fbc8f; }
+.tile.pizza-cheese-pineapple { background-color: #8fbc8f; }
+.tile.pizza-cheese-ham { background-color: #8fbc8f; }
+.tile.pizza-mushroom-pineapple { background-color: #ffdead; }
+.tile.pizza-mushroom-ham { background-color: #ffdead; }
+.tile.pizza-pineapple-ham { background-color: #ffdead; }
+.tile.pizza-pepperoni-cheese-mushroom { background-color: #daa520; }
+.tile.pizza-pepperoni-cheese-pineapple { background-color: #daa520; }
+.tile.pizza-pepperoni-cheese-ham { background-color: #daa520; }
+.tile.pizza-pepperoni-mushroom-pineapple { background-color: #daa520; }
+.tile.pizza-pepperoni-mushroom-ham { background-color: #daa520; }
+.tile.pizza-pepperoni-pineapple-ham { background-color: #daa520; }
+.tile.pizza-cheese-mushroom-pineapple { background-color: #daa520; }
+.tile.pizza-cheese-mushroom-ham { background-color: #daa520; }
+.tile.pizza-cheese-pineapple-ham { background-color: #daa520; }
+.tile.pizza-mushroom-pineapple-ham { background-color: #daa520; }
+.tile.pizza-pepperoni-cheese-mushroom-pineapple { background-color: #8b4513; }
+.tile.pizza-pepperoni-cheese-mushroom-ham { background-color: #8b4513; }
+.tile.pizza-pepperoni-cheese-pineapple-ham { background-color: #8b4513; }
+.tile.pizza-pepperoni-mushroom-pineapple-ham { background-color: #8b4513; }
+.tile.pizza-cheese-mushroom-pineapple-ham { background-color: #8b4513; }
+.tile.pizza-pepperoni-cheese-mushroom-pineapple-ham { background-color: #8b0000; }
 
-#score-container {
-    font-size: 24px;
-    margin-bottom: 10px;
-}
 
-#pizzas-list {
+.reset-button {
     margin-top: 20px;
+    padding: 10px 20px;
+    font-size: 1em;
+    color: #fff;
+    background: #8f7a66;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
 }
 
-#pizzas-list ul {
+.reset-button:hover {
+    background: #776e65;
+}
+
+.pizza-levels {
+    margin-top: 20px;
+    padding: 20px; /* Increased padding for better readability */
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.pizza-levels h2 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #333;
+    border-bottom: 2px solid #ccc; /* Added border bottom for section separation */
+    padding-bottom: 10px; /* Added padding for separation */
+}
+
+.pizza-levels ul {
     list-style: none;
     padding: 0;
 }
 
-#pizzas-list li {
-    margin: 5px 0;
+.pizza-levels li {
+    margin: 10px 0; /* Increased margin for better spacing */
+    font-size: 1.2em;
+    color: #555;
 }
