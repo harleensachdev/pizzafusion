@@ -6,12 +6,14 @@ body {
     margin: 0;
     background: #f3f3f3;
     font-family: 'Arial', sans-serif;
+    overflow: hidden;
 }
 
 .container {
     text-align: center;
-}
+    width: 1000px;
 
+}
 .header {
     margin-bottom: 20px;
 }
@@ -114,8 +116,8 @@ body {
 }
 
 .pizza-levels {
-    margin-top: 20px;
-    padding: 20px; /* Increased padding for better readability */
+    margin-top: 10px;
+    padding: 10px; /* Increased padding for better readability */
     background: #fff;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -123,7 +125,7 @@ body {
 
 .pizza-levels h2 {
     margin: 0;
-    font-size: 1.5em;
+    font-size: 1.2em;
     color: #333;
     border-bottom: 2px solid #ccc; /* Added border bottom for section separation */
     padding-bottom: 10px; /* Added padding for separation */
@@ -136,6 +138,6 @@ body {
 
 .pizza-levels li {
     margin: 10px 0; /* Increased margin for better spacing */
-    font-size: 1.2em;
+    font-size: 1.0em;
     color: #555;
 }
